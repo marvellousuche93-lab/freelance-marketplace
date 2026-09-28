@@ -1,0 +1,13 @@
+Hi {{ user.username }},
+
+The email address on your Freelance Marketplace account was changed
+to {{ new_email }}.
+
+If this was you, no action is needed.
+
+If you did NOT make this change, please reset your password immediately
+by visiting:
+
+{{ password_reset_url }}
+
+— Freelance Marketplace

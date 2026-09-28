@@ -1,0 +1,46 @@
+# ------------------------------------------------------------------
+# Freelance Marketplace — Backend Requirements
+# ------------------------------------------------------------------
+# Install with:  pip install -r requirements.txt
+# Python 3.12+
+# ------------------------------------------------------------------
+
+# Core framework
+Django==5.0.6
+
+# REST API framework
+djangorestframework==3.15.1
+
+# JWT authentication for DRF
+djangorestframework-simplejwt==5.3.1
+
+# Filtering, search, and ordering
+django-filter==24.2
+
+# CORS
+django-cors-headers==4.3.1
+
+# Environment variable management
+python-decouple==3.8
+
+# OpenAPI 3 schema + Swagger UI
+drf-spectacular==0.27.2
+
+# Image handling
+Pillow==11.1.0
+
+# ------------------------------------------------------------------
+# Production-only
+# ------------------------------------------------------------------
+
+# PostgreSQL driver. `psycopg[binary]` ships wheels for Python 3.13.
+psycopg[binary]==3.2.3
+
+# Parse DATABASE_URL into Django DATABASES.
+dj-database-url==2.2.0
+
+# Serve static files from Django in production (no nginx required).
+whitenoise==6.7.0
+
+# WSGI server for production. Django's runserver is dev-only.
+gunicorn==22.0.0

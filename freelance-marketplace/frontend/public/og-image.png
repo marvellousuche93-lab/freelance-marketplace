@@ -1,0 +1,9 @@
+Add-Type -AssemblyName System.Drawing
+$bmp = New-Object System.Drawing.Bitmap 1200, 630
+$g = [System.Drawing.Graphics]::FromImage($bmp)
+$g.Clear([System.Drawing.Color]::FromArgb(51, 139, 255))
+$font = New-Object System.Drawing.Font("Arial", 64, [System.Drawing.FontStyle]::Bold)
+$brush = [System.Drawing.Brushes]::White
+$g.DrawString("Freelance`nMarketplace", $font, $brush, 80, 220)
+$bmp.Save("$PWD\public\og-image.png", [System.Drawing.Imaging.ImageFormat]::Png)
+$g.Dispose(); $bmp.Dispose()
