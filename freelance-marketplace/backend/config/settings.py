@@ -70,11 +70,11 @@ ALLOWED_HOSTS = config(
     default="127.0.0.1,localhost",
     cast=Csv(),
 )
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://freelance-marketplace.*\.vercel\.app$",
-]
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^https://freelance-marketplace.*\.vercel\.app$",
+# ]
 
-CORS_ALLOW_CREDENTIALS = False
+# CORS_ALLOW_CREDENTIALS = False
 
 
 # Application definition
@@ -262,6 +262,15 @@ CORS_ALLOWED_ORIGINS = config(
     default="http://localhost:5173,http://127.0.0.1:5173",
     cast=Csv(),
 )
+
+# Hardcoded fallback — always allow these
+CORS_ALLOWED_ORIGINS += [
+    "https://freelance-marketplace-lac-psi.vercel.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://freelance-marketplace.*\.vercel\.app$",
+]
 
 CORS_ALLOW_CREDENTIALS = False
 
