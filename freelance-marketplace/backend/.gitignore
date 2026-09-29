@@ -1,0 +1,32 @@
+@'
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+*.sqlite3
+db.sqlite3
+
+# Django
+staticfiles/
+media/
+
+# Node
+node_modules/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+'@ | Out-File -Encoding ascii .gitignore
