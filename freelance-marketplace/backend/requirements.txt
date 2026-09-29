@@ -34,7 +34,7 @@ Pillow==11.1.0
 # ------------------------------------------------------------------
 
 # PostgreSQL driver. `psycopg[binary]` ships wheels for Python 3.13.
-psycopg[binary]==3.2.3
+psycopg[binary]==3.2.13
 
 # Parse DATABASE_URL into Django DATABASES.
 dj-database-url==2.2.0
