@@ -1,10 +1,4 @@
-# robots.txt for Freelance Marketplace
-
 User-agent: *
 Allow: /
 
-Disallow: /dashboard
-Disallow: /login
-Disallow: /register
-
-Sitemap: https://freelancemarketplace.example.com/sitemap.xml
+Sitemap: https://freelance-marketplace-lac-psi.vercel.app/sitemap.xml
