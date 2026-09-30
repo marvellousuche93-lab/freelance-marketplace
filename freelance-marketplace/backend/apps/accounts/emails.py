@@ -1,44 +1,50 @@
 """
 Email sending helpers for the accounts app.
 
-Each function loads a template, formats it, and sends the email. If
-sending fails, we log the error but do NOT raise — a failed email
-should never break the API response, and we don't want attackers to
-learn whether an address exists by observing 500s.
+Uses the Resend HTTP API (https://resend.com) instead of SMTP,
+because Render's free tier blocks outbound SMTP ports.
+
+Environment variables required:
+    RESEND_API_KEY      – your Resend API key (starts with "re_")
+    DEFAULT_FROM_EMAIL  – the "from" address shown to recipients
 """
 
 import logging
 
+import resend
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 logger = logging.getLogger(__name__)
 
+# Configure the Resend client once at import time.
+resend.api_key = getattr(settings, "RESEND_API_KEY", "")
+
 
 def _send(subject_template, body_template, context, to_email):
     """
-    Render subject+body templates and send them as a plain text email.
+    Render subject+body templates and send them as a plain text email
+    via Resend. Logs errors but does NOT raise — a failed email
+    should never break the API response.
     """
     subject = render_to_string(subject_template, context).strip().replace("\n", " ")
     body = render_to_string(body_template, context)
+
     try:
-        msg = EmailMultiAlternatives(
-            subject=subject,
-            body=body,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[to_email],
-        )
-        msg.send(fail_silently=False)
+        resend.Emails.send({
+            "from": settings.DEFAULT_FROM_EMAIL,
+            "to": [to_email],
+            "subject": subject,
+            "text": body,
+        })
+        logger.info("Email sent to %s: %s", to_email, subject)
     except Exception as exc:
         logger.exception("Failed to send email to %s: %s", to_email, exc)
 
 
 def send_email_change_confirmation(user, new_email, token, lifetime_hours):
     """Send a confirmation link to the NEW email address."""
-    confirm_url = (
-        f"{settings.FRONTEND_URL}/verify-email/{token}"
-    )
+    confirm_url = f"{settings.FRONTEND_URL}/verify-email/{token}"
     _send(
         subject_template="email/email_change_subject.txt",
         body_template="email/email_change_body.txt",

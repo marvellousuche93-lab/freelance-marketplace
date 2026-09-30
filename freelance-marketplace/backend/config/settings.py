@@ -107,10 +107,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
+    # "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -298,18 +299,40 @@ CACHES = {
 # app sends is printed to the terminal where `runserver` is running.
 # In production, set EMAIL_BACKEND, EMAIL_HOST, EMAIL_PORT, etc. via
 # .env to use a real SMTP service.
-EMAIL_BACKEND = config(
-    "EMAIL_BACKEND",
-    default="django.core.mail.backends.console.EmailBackend",
-)
-EMAIL_HOST = config("EMAIL_HOST", default="")
-EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+# EMAIL_BACKEND = config(
+#     "EMAIL_BACKEND",
+#     default="django.core.mail.backends.console.EmailBackend",
+# )
+# EMAIL_HOST = config("EMAIL_HOST", default="")
+# EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+# EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+# DEFAULT_FROM_EMAIL = config(
+#     "DEFAULT_FROM_EMAIL", default="Freelance Marketplace <noreply@freelancemarketplace.local>"
+    
+# )
+
+# ------------------------------------------------------------------
+# Email — Resend HTTP API (Render blocks SMTP on the free tier)
+# ------------------------------------------------------------------
+RESEND_API_KEY = config("RESEND_API_KEY", default="")
 DEFAULT_FROM_EMAIL = config(
-    "DEFAULT_FROM_EMAIL", default="Freelance Marketplace <noreply@freelancemarketplace.local>"
+    "DEFAULT_FROM_EMAIL",
+    default="Freelance Marketplace <onboarding@resend.dev>",
 )
+
+# The frontend origin used to build links that end up in emails.
+FRONTEND_URL = config("FRONTEND_URL", default="http://localhost:5173")
+
+# How long tokens for email change / password reset remain valid.
+EMAIL_CHANGE_TOKEN_LIFETIME_HOURS = config(
+    "EMAIL_CHANGE_TOKEN_LIFETIME_HOURS", default=24, cast=int
+)
+PASSWORD_RESET_TOKEN_LIFETIME_HOURS = config(
+    "PASSWORD_RESET_TOKEN_LIFETIME_HOURS", default=2, cast=int
+)
+
 
 # The frontend origin used to build links that end up in emails.
 # In production this is your real domain.

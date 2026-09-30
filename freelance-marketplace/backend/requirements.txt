@@ -44,3 +44,5 @@ whitenoise==6.7.0
 
 # WSGI server for production. Django's runserver is dev-only.
 gunicorn==22.0.0
+
+resend==2.5.1
